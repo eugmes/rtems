@@ -23,11 +23,25 @@ static volatile lm3s3749_uart *get_uart_regs(int minor)
   return (lm3s3749_uart *) ct->ulCtrlPort1;
 }
 
+/*
+ * Returns both integer and fractional parts as one number.
+ */
+static uint32_t get_baud_div(uint32_t baud)
+{
+  uint32_t clock4 = LM3S3749_SYSTEM_CLOCK * 4;
+  return (clock4 + baud - 1) / baud;
+}
+
 static void initialize(int minor)
 {
   volatile lm3s3749_uart *uart = get_uart_regs(minor);
 
   uart->ctl = 0;
+
+  uint32_t brd = get_baud_div(LM3S3749_UART_BAUD);
+  uart->ibrd = brd / 64;
+  uart->fbrd = brd % 64;
+
   uart->lcrh = UARTLCRH_WLEN(0x3) | UARTLCRH_FEN;
   uart->ctl = UARTCTL_RXE | UARTCTL_TXE | UARTCTL_UARTEN;
 }
