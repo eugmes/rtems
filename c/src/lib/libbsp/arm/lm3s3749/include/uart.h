@@ -31,7 +31,7 @@ typedef struct {
   uint32_t dr;
 
   uint32_t rsr_ecr;
-  uint32_t reserved [4];
+  uint32_t reserved_0[4];
 
 #define UARTFR_TXFE BSP_BIT32(7)
 #define UARTFR_RXFF BSP_BIT32(6)
@@ -39,6 +39,9 @@ typedef struct {
 #define UARTFR_RXFE BSP_BIT32(4)
 #define UARTFR_BUSY BSP_BIT32(3)
   uint32_t fr;
+
+  uint32_t reserved_1;
+
   uint32_t ilpr;
   uint32_t ibrd;
   uint32_t fbrd;
