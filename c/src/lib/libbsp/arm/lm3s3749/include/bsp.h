@@ -23,6 +23,8 @@
 
 #define BSP_ARMV7M_SYSTICK_PRIORITY (6 << 5)
 
+#define BSP_ARMV7M_SYSTICK_FREQUENCY LM3S3749_SYSTEM_CLOCK
+
 #ifndef ASM
 
 #include <bsp/default-initial-extension.h>
