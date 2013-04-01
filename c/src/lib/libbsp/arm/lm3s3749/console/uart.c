@@ -15,6 +15,7 @@
 #include <bspopts.h>
 #include <bsp/uart.h>
 #include <libchip/sersupp.h>
+#include <bsp/lm3s3749.h>
 
 static volatile lm3s3749_uart *get_uart_regs(int minor)
 {
