@@ -32,6 +32,8 @@
 #define LM3S3749_GPIO_G_BASE 0x4005e000
 #define LM3S3749_GPIO_H_BASE 0x4005f000
 
+#define LM3S3749_GPIO(port) ((volatile lm3s3749_gpio *)(LM3S3749_GPIO_A_BASE + (port) * 0x1000))
+
 #define LM3S3749_PLL_FREQUENCY 400000000
 
 typedef struct  {

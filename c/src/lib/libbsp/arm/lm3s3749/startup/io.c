@@ -1,0 +1,84 @@
+#include <bsp/io.h>
+#include <bsp/lm3s3749.h>
+#include <rtems.h>
+
+static void set_bit(volatile uint32_t *reg, unsigned index, uint32_t set)
+{
+  uint32_t mask = 1U;
+  uint32_t val = *reg;
+
+  val &= ~(mask << index);
+  val |= set << index;
+
+  *reg = val;
+}
+
+static void set_config(unsigned int pin, const lm3s3749_gpio_config *config)
+{
+  unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
+  volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
+  unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+  rtems_interrupt_level level;
+
+  /* FIXME is it required to disable interrupts? */
+  rtems_interrupt_disable(level);
+
+  /* Disable digital and analog functions before reconfiguration. */
+  set_bit(&gpio->den, index, 0);
+  set_bit(&gpio->amsel, index, 0);
+
+  set_bit(&gpio->afsel, index, config->alternate);
+  set_bit(&gpio->dir, index, config->dir);
+  set_bit(&gpio->odr, index, config->otype);
+
+  switch (config->drive) {
+  case LM3S3749_GPIO_DRIVE_4MA:
+    gpio->dr4r |= 1 << index;
+    break;
+  case LM3S3749_GPIO_DRIVE_8MA:
+    gpio->dr8r |= 1 << index;
+    break;
+  default:
+    gpio->dr2r |= 1 << index;
+    break;
+  }
+
+  switch (config->pull) {
+  case LM3S3749_GPIO_PULL_UP:
+    gpio->pur |= 1 << index;
+    break;
+  case LM3S3749_GPIO_PULL_DOWN:
+    gpio->pdr |= 1 << index;
+    break;
+  default:
+    set_bit(&gpio->pdr, index, 0);
+    set_bit(&gpio->pur, index, 0);
+    break;
+  }
+
+  set_bit(&gpio->slr, index, config->slr);
+
+  set_bit(&gpio->den, index, config->digital);
+  set_bit(&gpio->amsel, index, config->analog);
+
+  rtems_interrupt_enable(level);
+}
+
+void lm3s3749_gpio_set_config(const lm3s3749_gpio_config *config)
+{
+  unsigned int current = config->pin_first;
+  unsigned int last = config->pin_last;
+
+  while (current <= last) {
+    set_config(current, config);
+    current++;
+  }
+}
+
+void lm3s3749_gpio_set_config_array(const lm3s3749_gpio_config *configs, unsigned int count)
+{
+  unsigned int i;
+
+  for (i = 0; i < count; i++)
+    lm3s3749_gpio_set_config(&configs[i]);
+}

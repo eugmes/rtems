@@ -13,8 +13,10 @@
  */
 
 #include <bsp.h>
+#include <bspopts.h>
 #include <bsp/irq-generic.h>
 #include <bsp/lm3s3749.h>
+#include <bsp/io.h>
 #include <assert.h>
 
 static volatile lm3s3749_sc *get_sc_regs(void)
@@ -49,16 +51,36 @@ static void init_main_osc(void)
   sc->rcc = rcc;
 }
 
+static const lm3s3749_gpio_config start_config_gpio[] = {
+#ifdef LM3S3749_ENABLE_UART_0
+  LM3S3749_PIN_USART_RX(LM3S3749_PORT_A, 0),
+  LM3S3749_PIN_USART_TX(LM3S3749_PORT_A, 1),
+#endif
+#ifdef LM3S3749_ENABLE_UART_1
+  LM3S3749_PIN_USART_RX(LM3S3749_PORT_B, 0),
+  LM3S3749_PIN_USART_TX(LM3S3749_PORT_B, 1),
+#endif
+#ifdef LM3S3749_ENABLE_UART_2
+  LM3S3749_PIN_USART_RX(LM3S3749_PORT_D, 0),
+  LM3S3749_PIN_USART_TX(LM3S3749_PORT_D, 1),
+#endif
+  /* LED pins */
+  LM3S3749_PIN_LED(LM3S3749_PORT_D, 6),
+  LM3S3749_PIN_LED(LM3S3749_PORT_D, 7),
+};
+
 static void init_uart0_gpio(void)
 {
   volatile lm3s3749_sc *sc = get_sc_regs();
-  volatile lm3s3749_gpio *gpioa = (volatile lm3s3749_gpio *)LM3S3749_GPIO_A_BASE;
 
-  /* Use AHB for GPIOA port. */
-  sc->gpiohbctl |= SCGPIOHBCTL_PORTA;
+  /* Use AHB for all gpio ports. */
+  sc->gpiohbctl |= SCGPIOHBCTL_PORTA | SCGPIOHBCTL_PORTB | SCGPIOHBCTL_PORTC |
+      SCGPIOHBCTL_PORTD | SCGPIOHBCTL_PORTE | SCGPIOHBCTL_PORTF |
+      SCGPIOHBCTL_PORTG | SCGPIOHBCTL_PORTH;
 
-  /* Enable GPIOA clock. */
-  sc->rcgc2 |= SCRCGC2_GPIOA;
+  /* Enable GPIOA and GPIOD clocks. */
+  // FIXME do this somewhere else
+  sc->rcgc2 |= SCRCGC2_GPIOA | SCRCGC2_GPIOD;
 
   /* Enable UART0 clock. */
   sc->rcgc1 |= SCRCGC1_UART0;
@@ -67,23 +89,13 @@ static void init_uart0_gpio(void)
   asm volatile("nop");
   asm volatile("nop");
 
-  /* Configure U0TX/PA1 as output, U0RX/PA0 as input. */
-  gpioa->dir = (gpioa->dir | (1 << 1)) & ~((uint32_t)1 << 0);
-
-  /* Enable alternate function on PA0-1. */
-  gpioa->afsel |= (1 << 1) | (1 << 0);
-
-  /* Enable pull-up on U0RX/PA0. */
-  gpioa->pur |= 1 << 0;
-
-  /* Enable digital function on PA0-1. */
-  gpioa->den |= (1 << 1) | (1 << 0);
+  lm3s3749_gpio_set_config_array(start_config_gpio,
+      sizeof(start_config_gpio) / sizeof(start_config_gpio[0]));
 }
 
 void bsp_start(void)
 {
   init_main_osc();
   init_uart0_gpio();
-
   bsp_interrupt_initialize();
 }

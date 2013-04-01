@@ -101,6 +101,10 @@ $(PROJECT_INCLUDE)/bsp/uart.h: include/uart.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
 	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/uart.h
 PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/uart.h
 
+$(PROJECT_INCLUDE)/bsp/io.h: include/io.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
+	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/io.h
+PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/io.h
+
 $(PROJECT_INCLUDE)/bsp/lm3s3749.h: include/lm3s3749.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
 	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/lm3s3749.h
 PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/lm3s3749.h
