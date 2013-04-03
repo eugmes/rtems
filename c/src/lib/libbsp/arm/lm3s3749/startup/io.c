@@ -20,7 +20,6 @@ static void set_config(unsigned int pin, const lm3s3749_gpio_config *config)
   unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
   rtems_interrupt_level level;
 
-  /* FIXME is it required to disable interrupts? */
   rtems_interrupt_disable(level);
 
   /* Disable digital and analog functions before reconfiguration. */
@@ -81,4 +80,33 @@ void lm3s3749_gpio_set_config_array(const lm3s3749_gpio_config *configs, unsigne
 
   for (i = 0; i < count; i++)
     lm3s3749_gpio_set_config(&configs[i]);
+}
+
+/**
+ * Enables/disables digital function on the specified pin.
+ */
+void lm3s3749_gpio_digital_enable(unsigned int pin, bool enable)
+{
+  unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
+  volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
+  unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+  rtems_interrupt_level level;
+
+  rtems_interrupt_disable(level);
+  set_bit(&gpio->den, index, enable);
+  rtems_interrupt_enable(level);
+}
+
+/**
+ * Enables/disables analog mode on the specified pin.
+ */
+void lm3s3749_gpio_analog_mode_select(unsigned int pin, bool enable)
+{
+  unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
+  volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
+  unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+
+  rtems_interrupt_disable(level);
+  set_bit(&gpio->amsel, index, enable);
+  rtems_interrupt_enable(level);
 }

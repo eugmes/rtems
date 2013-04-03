@@ -1,5 +1,6 @@
 #ifndef LIBBSP_ARM_LM3S3749_IO_H
 #define LIBBSP_ARM_LM3S3749_IO_H
+#include <stdbool.h>
 
 typedef enum {
   LM3S3749_GPIO_DIRECTION_INPUT,
@@ -115,5 +116,7 @@ typedef enum {
 
 void lm3s3749_gpio_set_config(const lm3s3749_gpio_config *config);
 void lm3s3749_gpio_set_config_array(const lm3s3749_gpio_config *configs, unsigned int count);
+void lm3s3749_gpio_digital_enable(unsigned int pin, bool enable);
+void lm3s3749_gpio_analog_mode_select(unsigned int pin, bool enable);
 
 #endif
