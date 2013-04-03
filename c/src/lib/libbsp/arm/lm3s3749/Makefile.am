@@ -46,6 +46,7 @@ include_bsp_HEADERS += ../shared/armv7m/include/armv7m-irq.h
 include_bsp_HEADERS += include/irq.h
 include_bsp_HEADERS += include/uart.h
 include_bsp_HEADERS += include/io.h
+include_bsp_HEADERS += include/sc.h
 include_bsp_HEADERS += include/lm3s3749.h
 
 ###############################################################################
@@ -77,6 +78,7 @@ libbsp_a_SOURCES += startup/bspstart.c
 libbsp_a_SOURCES += startup/bspstarthook.c
 libbsp_a_SOURCES += startup/bspreset.c
 libbsp_a_SOURCES += startup/io.c
+libbsp_a_SOURCES += startup/sc.c
 
 # IRQ
 libbsp_a_SOURCES += ../../shared/src/irq-default-handler.c

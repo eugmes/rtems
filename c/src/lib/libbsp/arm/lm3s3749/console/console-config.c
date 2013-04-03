@@ -29,7 +29,8 @@ console_tbl Console_Configuration_Ports [] = {
       .pDeviceFns = &lm3s3749_uart_fns,
       .ulCtrlPort1 = LM3S3749_UART_0_BASE,
       .ulClock = LM3S3749_UART_BAUD,
-      .ulIntVector = LM3S3749_IRQ_UART_0
+      .ulIntVector = LM3S3749_IRQ_UART_0,
+      .pDeviceParams = (void *)0
     },
   #endif
   #ifdef LM3S3749_ENABLE_UART_1
@@ -39,7 +40,8 @@ console_tbl Console_Configuration_Ports [] = {
       .pDeviceFns = &lm3s3749_uart_fns,
       .ulCtrlPort1 = LM3S3749_UART_1_BASE,
       .ulClock = LM3S3749_UART_BAUD,
-      .ulIntVector = LM3S3749_IRQ_UART_1
+      .ulIntVector = LM3S3749_IRQ_UART_1,
+      .pDeviceParams = (void *)1
     }
   #endif
   #ifdef LM3S3749_ENABLE_UART_2
@@ -49,7 +51,8 @@ console_tbl Console_Configuration_Ports [] = {
       .pDeviceFns = &lm3s3749_uart_fns,
       .ulCtrlPort1 = LM3S3749_UART_2_BASE,
       .ulClock = LM3S3749_UART_BAUD,
-      .ulIntVector = LM3S3749_IRQ_UART_2
+      .ulIntVector = LM3S3749_IRQ_UART_2,
+      .pDeviceParams = (void *)2
     }
   #endif
 };

@@ -1,5 +1,6 @@
 #include <bsp/io.h>
 #include <bsp/lm3s3749.h>
+#include <bsp/sc.h>
 #include <rtems.h>
 
 static void set_bit(volatile uint32_t *reg, unsigned index, uint32_t set)
@@ -21,6 +22,8 @@ static void set_config(unsigned int pin, const lm3s3749_gpio_config *config)
   rtems_interrupt_level level;
 
   rtems_interrupt_disable(level);
+
+  lm3s3749_sc_enable_gpio_clock(port, true);
 
   /* Disable digital and analog functions before reconfiguration. */
   set_bit(&gpio->den, index, 0);

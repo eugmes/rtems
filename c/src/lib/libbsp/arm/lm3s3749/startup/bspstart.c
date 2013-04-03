@@ -17,16 +17,12 @@
 #include <bsp/irq-generic.h>
 #include <bsp/lm3s3749.h>
 #include <bsp/io.h>
+#include <bsp/sc.h>
 #include <assert.h>
-
-static volatile lm3s3749_sc *get_sc_regs(void)
-{
-  return (volatile lm3s3749_sc *)LM3S3749_SC_BASE;
-}
 
 static void init_main_osc(void)
 {
-  volatile lm3s3749_sc *sc = get_sc_regs();
+  volatile lm3s3749_sc *sc = LM3S3749_SC;
 
   uint32_t sysdiv_val = LM3S3749_PLL_FREQUENCY / LM3S3749_SYSTEM_CLOCK;
   assert(sysdiv_val * LM3S3749_SYSTEM_CLOCK == LM3S3749_PLL_FREQUENCY);
@@ -66,25 +62,14 @@ static const lm3s3749_gpio_config start_config_gpio[] = {
 #endif
 };
 
-static void init_uart0_gpio(void)
+static void init_gpio(void)
 {
-  volatile lm3s3749_sc *sc = get_sc_regs();
+  volatile lm3s3749_sc *sc = LM3S3749_SC;
 
   /* Use AHB for all gpio ports. */
   sc->gpiohbctl |= SCGPIOHBCTL_PORTA | SCGPIOHBCTL_PORTB | SCGPIOHBCTL_PORTC |
       SCGPIOHBCTL_PORTD | SCGPIOHBCTL_PORTE | SCGPIOHBCTL_PORTF |
       SCGPIOHBCTL_PORTG | SCGPIOHBCTL_PORTH;
-
-  /* Enable GPIOA and GPIOD clocks. */
-  // FIXME do this somewhere else
-  sc->rcgc2 |= SCRCGC2_GPIOA | SCRCGC2_GPIOD;
-
-  /* Enable UART0 clock. */
-  sc->rcgc1 |= SCRCGC1_UART0;
-
-  asm volatile("nop");
-  asm volatile("nop");
-  asm volatile("nop");
 
   lm3s3749_gpio_set_config_array(start_config_gpio,
       sizeof(start_config_gpio) / sizeof(start_config_gpio[0]));
@@ -93,6 +78,6 @@ static void init_uart0_gpio(void)
 void bsp_start(void)
 {
   init_main_osc();
-  init_uart0_gpio();
+  init_gpio();
   bsp_interrupt_initialize();
 }

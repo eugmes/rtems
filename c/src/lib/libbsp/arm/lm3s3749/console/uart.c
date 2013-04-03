@@ -15,6 +15,7 @@
 #include <bspopts.h>
 #include <bsp/uart.h>
 #include <libchip/sersupp.h>
+#include <bsp/sc.h>
 #include <bsp/lm3s3749.h>
 
 static volatile lm3s3749_uart *get_uart_regs(int minor)
@@ -22,6 +23,13 @@ static volatile lm3s3749_uart *get_uart_regs(int minor)
   console_tbl *ct = Console_Port_Tbl [minor];
 
   return (lm3s3749_uart *) ct->ulCtrlPort1;
+}
+
+static unsigned int get_uart_number(int minor)
+{
+  console_tbl *ct = Console_Port_Tbl [minor];
+
+  return (unsigned int)ct->pDeviceParams;
 }
 
 /*
@@ -36,6 +44,9 @@ static uint32_t get_baud_div(uint32_t baud)
 static void initialize(int minor)
 {
   volatile lm3s3749_uart *uart = get_uart_regs(minor);
+  unsigned int num = get_uart_number(minor);
+
+  lm3s3749_sc_enable_uart_clock(num, true);
 
   uart->ctl = 0;
 

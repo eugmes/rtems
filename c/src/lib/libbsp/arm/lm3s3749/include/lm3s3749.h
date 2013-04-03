@@ -33,6 +33,7 @@
 #define LM3S3749_GPIO_H_BASE 0x4005f000
 
 #define LM3S3749_GPIO(port) ((volatile lm3s3749_gpio *)(LM3S3749_GPIO_A_BASE + (port) * 0x1000))
+#define LM3S3749_SC ((volatile lm3s3749_sc *)LM3S3749_SC_BASE)
 
 #define LM3S3749_PLL_FREQUENCY 400000000
 
