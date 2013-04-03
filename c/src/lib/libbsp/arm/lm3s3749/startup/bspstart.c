@@ -64,9 +64,6 @@ static const lm3s3749_gpio_config start_config_gpio[] = {
   LM3S3749_PIN_USART_RX(LM3S3749_PORT_D, 0),
   LM3S3749_PIN_USART_TX(LM3S3749_PORT_D, 1),
 #endif
-  /* LED pins */
-  LM3S3749_PIN_LED(LM3S3749_PORT_D, 6),
-  LM3S3749_PIN_LED(LM3S3749_PORT_D, 7),
 };
 
 static void init_uart0_gpio(void)
