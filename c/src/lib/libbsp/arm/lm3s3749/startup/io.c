@@ -105,8 +105,29 @@ void lm3s3749_gpio_analog_mode_select(unsigned int pin, bool enable)
   unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
   volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
   unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+  rtems_interrupt_level level;
 
   rtems_interrupt_disable(level);
   set_bit(&gpio->amsel, index, enable);
   rtems_interrupt_enable(level);
+}
+
+void lm3s3749_gpio_set_pin(unsigned int pin, bool set)
+{
+  unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
+  volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
+  unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+  uint32_t mask = 1U << index;
+
+  gpio->data[mask] = set ? mask : 0;
+}
+
+bool lm3s3749_gpio_get_pin(unsigned int pin)
+{
+  unsigned int port = LM3S3749_GPIO_PORT_OF_PIN(pin);
+  volatile lm3s3749_gpio *gpio = LM3S3749_GPIO(port);
+  unsigned int index = LM3S3749_GPIO_INDEX_OF_PIN(pin);
+  uint32_t mask = 1U << index;
+
+  return gpio->data[mask] != 0;
 }

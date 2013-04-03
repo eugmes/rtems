@@ -119,4 +119,7 @@ void lm3s3749_gpio_set_config_array(const lm3s3749_gpio_config *configs, unsigne
 void lm3s3749_gpio_digital_enable(unsigned int pin, bool enable);
 void lm3s3749_gpio_analog_mode_select(unsigned int pin, bool enable);
 
+void lm3s3749_gpio_set_pin(unsigned int pin, bool set);
+bool lm3s3749_gpio_get_pin(unsigned int pin);
+
 #endif
