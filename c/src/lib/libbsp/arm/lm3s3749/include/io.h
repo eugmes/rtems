@@ -72,7 +72,7 @@ typedef enum {
 #define LM3S3749_GPIO_PORT_OF_PIN(pin) (((pin) >> 3) & 0xf)
 #define LM3S3749_GPIO_INDEX_OF_PIN(pin) ((pin) & 0x7)
 
-#define LM3S3749_PIN_USART_TX(port, idx) \
+#define LM3S3749_PIN_UART_TX(port, idx) \
   { \
     .pin_first = LM3S3749_GPIO_PIN(port, idx), \
     .pin_last = LM3S3749_GPIO_PIN(port, idx), \
@@ -86,7 +86,7 @@ typedef enum {
     .slr = LM3S3749_GPIO_NO_SLEW_RATE_CONTROL \
   }
 
-#define LM3S3749_PIN_USART_RX(port, idx) \
+#define LM3S3749_PIN_UART_RX(port, idx) \
   { \
     .pin_first = LM3S3749_GPIO_PIN(port, idx), \
     .pin_last = LM3S3749_GPIO_PIN(port, idx), \
