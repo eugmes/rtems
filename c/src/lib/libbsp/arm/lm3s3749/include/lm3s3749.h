@@ -32,6 +32,9 @@
 #define LM3S3749_GPIO_G_BASE 0x4005e000
 #define LM3S3749_GPIO_H_BASE 0x4005f000
 
+#define LM3S3749_SSI_0_BASE 0x40008000
+#define LM3S3749_SSI_1_BASE 0x40009000
+
 #define LM3S3749_GPIO(port) ((volatile lm3s3749_gpio *)(LM3S3749_GPIO_A_BASE + (port) * 0x1000))
 #define LM3S3749_SC ((volatile lm3s3749_sc *)LM3S3749_SC_BASE)
 
@@ -292,5 +295,44 @@ typedef struct {
   uint32_t mis;
   uint32_t icr;
 } lm3s3749_uart;
+
+typedef struct {
+#define SSICR0_SCR(val) BSP_FLD32(val, 8, 15)
+#define SSICR0_SPH BSP_BIT32(7)
+#define SSICR0_SPO BSP_BIT32(6)
+#define SSICR0_FRF(val) BSP_FLD32(val, 4, 5)
+#define SSICR0_DSS(val) BSP_FLD32(val, 0, 3)
+  uint32_t cr0;
+
+#define SSICR1_SOD BSP_BIT32(3)
+#define SSICR1_MS BSP_BIT32(2)
+#define SSICR1_SSE BSP_BIT32(1)
+#define SSICR1_LBM BSP_BIT32(0)
+  uint32_t cr1;
+  uint32_t dr;
+
+#define SSISR_BSY BSP_BIT32(4)
+#define SSISR_RFF BSP_BIT32(3)
+#define SSISR_RNE BSP_BIT32(2)
+#define SSISR_TNF BSP_BIT32(1)
+#define SSISR_TFE BSP_BIT32(0)
+  uint32_t sr;
+
+#define SSI_CPSRDIV(val) BSP_FLD32(val, 0, 7)
+  uint32_t cpsr;
+
+#define SSII_TX BSP_BIT32(3)
+#define SSII_RX BSP_BIT32(2)
+#define SSII_RT BSP_BIT32(1)
+#define SSII_ROR BSP_BIT32(0)
+  uint32_t im;
+  uint32_t ris;
+  uint32_t mis;
+  uint32_t icr;
+
+#define SSIDMACTL_TXDMAE BSP_BIT32(1)
+#define SSIDMACTL_RXDMAE BSP_BIT32(0)
+  uint32_t dmactl;
+} lm3s3749_ssi;
 
 #endif /* LIBBSP_ARM_LM3S3749_LM3S3749_H */

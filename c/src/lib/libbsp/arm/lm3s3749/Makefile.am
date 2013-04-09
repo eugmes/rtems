@@ -47,6 +47,7 @@ include_bsp_HEADERS += include/irq.h
 include_bsp_HEADERS += include/uart.h
 include_bsp_HEADERS += include/io.h
 include_bsp_HEADERS += include/sc.h
+include_bsp_HEADERS += include/ssi.h
 include_bsp_HEADERS += include/lm3s3749.h
 
 ###############################################################################
@@ -110,6 +111,9 @@ libbsp_a_SOURCES += ../../shared/timerstub.c
 libbsp_a_SOURCES += ../../../libcpu/shared/src/cache_manager.c
 libbsp_a_SOURCES += ../../../libcpu/arm/shared/cache/cache_.h
 libbsp_a_CPPFLAGS += -I$(srcdir)/../../../libcpu/arm/shared/include
+
+# SSI
+libbsp_a_SOURCES += ssi/ssi.c
 
 ###############################################################################
 #                  Special Rules                                              #

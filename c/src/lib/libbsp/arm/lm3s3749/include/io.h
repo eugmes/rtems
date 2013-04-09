@@ -114,6 +114,9 @@ typedef enum {
     .slr = LM3S3749_GPIO_SLEW_RATE_CONTROL \
   }
 
+#define LM3S3749_PIN_SSI_TX(port, idx) LM3S3749_PIN_UART_TX(port, idx)
+#define LM3S3749_PIN_SSI_RX(port, idx) LM3S3749_PIN_UART_RX(port, idx)
+
 void lm3s3749_gpio_set_config(const lm3s3749_gpio_config *config);
 void lm3s3749_gpio_set_config_array(const lm3s3749_gpio_config *configs, unsigned int count);
 void lm3s3749_gpio_digital_enable(unsigned int pin, bool enable);
