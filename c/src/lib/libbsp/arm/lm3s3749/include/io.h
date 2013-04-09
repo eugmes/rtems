@@ -68,9 +68,9 @@ typedef enum {
   LM3S3749_PORT_H
 } lm3s3749_gpio_port;
 
-#define LM3S3749_GPIO_PIN(port, idx) ((((port) << 4) | (idx)) & 0xff)
-#define LM3S3749_GPIO_PORT_OF_PIN(pin) (((pin) >> 4) & 0xf)
-#define LM3S3749_GPIO_INDEX_OF_PIN(pin) ((pin) & 0xf)
+#define LM3S3749_GPIO_PIN(port, idx) (((port) << 3) | (idx))
+#define LM3S3749_GPIO_PORT_OF_PIN(pin) (((pin) >> 3) & 0xf)
+#define LM3S3749_GPIO_INDEX_OF_PIN(pin) ((pin) & 0x7)
 
 #define LM3S3749_PIN_USART_TX(port, idx) \
   { \
