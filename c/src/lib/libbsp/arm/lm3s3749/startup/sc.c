@@ -92,6 +92,6 @@ void lm3s3749_sc_set_pwmdiv(unsigned int div)
   rtems_interrupt_level level;
 
   rtems_interrupt_disable(level);
-  sc->rcc = (sc->rcc & ~SCRCC_PWMDIV_MSK) | SCRCC_PWMDIV(div);
+  sc->rcc = (sc->rcc & ~SCRCC_PWMDIV_MSK) | SCRCC_PWMDIV(div) | SCRCC_USEPWMDIV;
   rtems_interrupt_enable(level);
 }
