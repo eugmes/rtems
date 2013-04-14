@@ -5,5 +5,7 @@
 void lm3s3749_sc_enable_gpio_clock(unsigned int port, bool enable);
 void lm3s3749_sc_enable_uart_clock(unsigned int port, bool enable);
 void lm3s3749_sc_enable_ssi_clock(unsigned int port, bool enable);
+void lm3s3749_sc_enable_pwm_clock(bool enable);
+void lm3s3749_sc_set_pwmdiv(unsigned int div);
 
 #endif
