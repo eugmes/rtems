@@ -105,9 +105,9 @@ $(PROJECT_INCLUDE)/bsp/io.h: include/io.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
 	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/io.h
 PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/io.h
 
-$(PROJECT_INCLUDE)/bsp/sc.h: include/sc.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
-	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/sc.h
-PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/sc.h
+$(PROJECT_INCLUDE)/bsp/syscon.h: include/syscon.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
+	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/syscon.h
+PREINSTALL_FILES += $(PROJECT_INCLUDE)/bsp/syscon.h
 
 $(PROJECT_INCLUDE)/bsp/ssi.h: include/ssi.h $(PROJECT_INCLUDE)/bsp/$(dirstamp)
 	$(INSTALL_DATA) $< $(PROJECT_INCLUDE)/bsp/ssi.h

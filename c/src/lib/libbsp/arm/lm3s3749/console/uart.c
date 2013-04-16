@@ -15,7 +15,7 @@
 #include <bspopts.h>
 #include <bsp/uart.h>
 #include <libchip/sersupp.h>
-#include <bsp/sc.h>
+#include <bsp/syscon.h>
 #include <bsp/lm3s3749.h>
 
 static volatile lm3s3749_uart *get_uart_regs(int minor)
@@ -46,7 +46,7 @@ static void initialize(int minor)
   volatile lm3s3749_uart *uart = get_uart_regs(minor);
   unsigned int num = get_uart_number(minor);
 
-  lm3s3749_sc_enable_uart_clock(num, true);
+  lm3s3749_syscon_enable_uart_clock(num, true);
 
   uart->ctl = 0;
 

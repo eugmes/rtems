@@ -17,34 +17,35 @@
 #include <bsp/irq-generic.h>
 #include <bsp/lm3s3749.h>
 #include <bsp/io.h>
-#include <bsp/sc.h>
+#include <bsp/syscon.h>
 #include <assert.h>
 
 static void init_main_osc(void)
 {
-  volatile lm3s3749_sc *sc = LM3S3749_SC;
+  volatile lm3s3749_syscon *syscon = LM3S3749_SYSCON;
 
   uint32_t sysdiv_val = LM3S3749_PLL_FREQUENCY / LM3S3749_SYSTEM_CLOCK;
   assert(sysdiv_val * LM3S3749_SYSTEM_CLOCK == LM3S3749_PLL_FREQUENCY);
   assert((sysdiv_val >= 4) && (sysdiv_val <= 16));
 
-  uint32_t rcc = sc->rcc;
+  uint32_t rcc = syscon->rcc;
 
-  rcc = (rcc & ~SCRCC_USESYSDIV) | SCRCC_BYPASS;
-  sc->rcc = rcc;
+  rcc = (rcc & ~SYSCONRCC_USESYSDIV) | SYSCONRCC_BYPASS;
+  syscon->rcc = rcc;
 
-  rcc = (rcc & ~(SCRCC_PWRDN | SCRCC_XTAL_MSK | SCRCC_OSCSRC_MSK)) |
-      SCRCC_XTAL_10MHZ | SCRCC_OSCSRC_MOSC;
-  sc->rcc = rcc;
+  rcc = (rcc & ~(SYSCONRCC_PWRDN | SYSCONRCC_XTAL_MSK | SYSCONRCC_OSCSRC_MSK))
+      | SYSCONRCC_XTAL_10MHZ | SYSCONRCC_OSCSRC_MOSC;
+  syscon->rcc = rcc;
 
-  rcc = (rcc & ~SCRCC_SYSDIV_MSK) | SCRCC_SYSDIV(sysdiv_val / 2 - 1) | SCRCC_USESYSDIV;
-  sc->rcc = rcc;
+  rcc = (rcc & ~SYSCONRCC_SYSDIV_MSK) | SYSCONRCC_SYSDIV(sysdiv_val / 2 - 1)
+      | SYSCONRCC_USESYSDIV;
+  syscon->rcc = rcc;
 
-  while ((sc->ris & SCRIS_PLLLRIS) == 0)
+  while ((syscon->ris & SYSCONRIS_PLLLRIS) == 0)
       /* Wait for PLL lock */;
 
-  rcc &= ~SCRCC_BYPASS;
-  sc->rcc = rcc;
+  rcc &= ~SYSCONRCC_BYPASS;
+  syscon->rcc = rcc;
 }
 
 static const lm3s3749_gpio_config start_config_gpio[] = {
@@ -64,12 +65,13 @@ static const lm3s3749_gpio_config start_config_gpio[] = {
 
 static void init_gpio(void)
 {
-  volatile lm3s3749_sc *sc = LM3S3749_SC;
+  volatile lm3s3749_syscon *syscon = LM3S3749_SYSCON;
 
   /* Use AHB for all gpio ports. */
-  sc->gpiohbctl |= SCGPIOHBCTL_PORTA | SCGPIOHBCTL_PORTB | SCGPIOHBCTL_PORTC |
-      SCGPIOHBCTL_PORTD | SCGPIOHBCTL_PORTE | SCGPIOHBCTL_PORTF |
-      SCGPIOHBCTL_PORTG | SCGPIOHBCTL_PORTH;
+  syscon->gpiohbctl |= SYSCONGPIOHBCTL_PORTA | SYSCONGPIOHBCTL_PORTB
+      | SYSCONGPIOHBCTL_PORTC | SYSCONGPIOHBCTL_PORTD
+      | SYSCONGPIOHBCTL_PORTE | SYSCONGPIOHBCTL_PORTF
+      | SYSCONGPIOHBCTL_PORTG | SYSCONGPIOHBCTL_PORTH;
 
   lm3s3749_gpio_set_config_array(start_config_gpio,
       sizeof(start_config_gpio) / sizeof(start_config_gpio[0]));
