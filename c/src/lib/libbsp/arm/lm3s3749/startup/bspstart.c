@@ -34,7 +34,7 @@ static void init_main_osc(void)
   syscon->rcc = rcc;
 
   rcc = (rcc & ~(SYSCONRCC_PWRDN | SYSCONRCC_XTAL_MSK | SYSCONRCC_OSCSRC_MSK))
-      | SYSCONRCC_XTAL_10MHZ | SYSCONRCC_OSCSRC_MOSC;
+      | SYSCONRCC_XTAL(LM3S3749_XTAL_CONFIG) | SYSCONRCC_OSCSRC_MOSC;
   syscon->rcc = rcc;
 
   rcc = (rcc & ~SYSCONRCC_SYSDIV_MSK) | SYSCONRCC_SYSDIV(sysdiv_val / 2 - 1)
