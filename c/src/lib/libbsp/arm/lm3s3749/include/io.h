@@ -1,3 +1,11 @@
+/*
+ * Copyright © 2013 Eugeniy Meshcheryakov <eugen@debian.org>
+ *
+ * The license and distribution terms for this file may be
+ * found in the file LICENSE in this distribution or at
+ * http://www.rtems.com/license/LICENSE.
+ */
+
 #ifndef LIBBSP_ARM_LM3S3749_IO_H
 #define LIBBSP_ARM_LM3S3749_IO_H
 #include <stdbool.h>

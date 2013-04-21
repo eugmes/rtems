@@ -1,3 +1,11 @@
+/*
+ * Copyright © 2013 Eugeniy Meshcheryakov <eugen@debian.org>
+ *
+ * The license and distribution terms for this file may be
+ * found in the file LICENSE in this distribution or at
+ * http://www.rtems.com/license/LICENSE.
+ */
+
 #include <bsp/io.h>
 #include <bsp/lm3s3749.h>
 #include <bsp/syscon.h>
