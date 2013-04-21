@@ -18,7 +18,7 @@ typedef struct {
   int bus_number;
   uint16_t idle_char;
   uint8_t cs_pin;
-  lm3s3749_gpio_config io_configs[3]; 
+  lm3s3749_gpio_config io_configs[3];
 } lm3s3749_ssi_bus_entry;
 
 static rtems_status_code lm3s3749_ssi_init(rtems_libi2c_bus_t *bus)
@@ -50,7 +50,7 @@ static rtems_status_code lm3s3749_ssi_send_stop(rtems_libi2c_bus_t *bus)
 
   lm3s3749_gpio_set_pin(e->cs_pin, true);
 
-  return RTEMS_SUCCESSFUL; 
+  return RTEMS_SUCCESSFUL;
 }
 
 static rtems_status_code lm3s3749_ssi_send_addr(rtems_libi2c_bus_t *bus,
