@@ -1,0 +1,14 @@
+BSP for Texas Instruments LM3S3749 microcontroller
+
+By default the MCU is configured to run from external 10 MHz oscillator.
+Default core frequency is configured to 50 MHz. Both external oscillator
+frequency and system frequency are configurable (see configure.in).
+
+Default configuration enables UART0 at 115200 baud.
+
+SSI support is available using libi2c. For now settings are hardcoded to
+SPI mode with clock 1/50 of system clock frequency (1 MHz in for default
+config). Any pin can be used as CS pin, it should be supplied as libi2c
+address (use LM3S3749_GPIO_PIN from bsp/io.h). SSI support code does not
+attempt to configure pins used as CS, this is responsibility of the user
+application/driver.
