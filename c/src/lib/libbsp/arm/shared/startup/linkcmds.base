@@ -7,7 +7,7 @@
  */
 
 /*
- * Copyright (c) 2008-2011 embedded brains GmbH.  All rights reserved.
+ * Copyright (c) 2008-2013 embedded brains GmbH.  All rights reserved.
  *
  *  embedded brains GmbH
  *  Obere Lagerstr. 30
@@ -346,10 +346,16 @@ SECTIONS {
 
 		bsp_section_data_end = .;
 	} > REGION_DATA AT > REGION_DATA_LOAD
+	.tdata : {
+		*(.tdata .tdata.* .gnu.linkonce.td.*)
+	} > REGION_DATA AT > REGION_DATA_LOAD
 	bsp_section_data_size = bsp_section_data_end - bsp_section_data_begin;
 	bsp_section_data_load_begin = LOADADDR (.data);
 	bsp_section_data_load_end = bsp_section_data_load_begin + bsp_section_data_size;
 
+	.tbss : {
+		*(.tbss .tbss.* .gnu.linkonce.tb.*) *(.tcommon)
+	} > REGION_BSS AT > REGION_BSS
 	.bss : {
 		bsp_section_bss_begin = .;
 		*(.dynbss)
@@ -424,6 +430,8 @@ SECTIONS {
 	/* DWARF 3 */
 	.debug_pubtypes 0 : { *(.debug_pubtypes) }
 	.debug_ranges   0 : { *(.debug_ranges) }
+	/* DWARF extension */
+	.debug_macro    0 : { *(.debug_macro) }
 	.ARM.attributes 0 : { KEEP (*(.ARM.attributes)) KEEP (*(.gnu.attributes)) }
 	.note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }
 	/DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) }

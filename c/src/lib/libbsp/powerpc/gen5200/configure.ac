@@ -29,7 +29,6 @@ RTEMS_BSPOPTS_HELP([ALLOW_IRQ_NESTING],
 [If set to !0, allow nested IRQ processing.])
 
 RTEMS_BSPOPTS_SET([BSP_PRESS_KEY_FOR_RESET],[icecube],[1])
-RTEMS_BSPOPTS_SET([BSP_RESET_BOARD_AT_EXIT],[pm520_cr825],[1])
 RTEMS_BSPOPTS_SET([BSP_PRESS_KEY_FOR_RESET],[*],[0])
 RTEMS_BSPOPTS_HELP([BSP_PRESS_KEY_FOR_RESET],
 [If set to !0, print a message and wait until pressed before resetting
@@ -55,11 +54,15 @@ RTEMS_BSPOPTS_SET([BSP_GPIOPCR_INITMASK],[*],[0x330F0F77])
 RTEMS_BSPOPTS_SET([BSP_GPIOPCR_INITVAL],[*],[0x01050444])
 
 RTEMS_BSPOPTS_HELP([BSP_GPIOPCR_INITMASK],
-[defines the bits modified in the MPC5200 GPIOPCR register during init. 
- Must match the hardware requirements])
+[Defines the bits cleared in the MPC5200 GPIOPCR register during
+initialization.  Must match the hardware requirements.  Must be consistent with
+BSP_GPIOPCR_INITVAL.  The bits are cleared via BSP_GPIOPCR_INITMASK and then
+set via BSP_GPIOPCR_INITVAL.])
 RTEMS_BSPOPTS_HELP([BSP_GPIOPCR_INITVAL],
-[defines the bit values written in the MPC5200 GPIOPCR register during init. 
- Must match the hardware requirements])
+[Defines the bits set in the MPC5200 GPIOPCR register during initialization.
+Must match the hardware requirements.  Must be consistent with
+BSP_GPIOPCR_INITMASK.  The bits are cleared via BSP_GPIOPCR_INITMASK and then
+set via BSP_GPIOPCR_INITVAL.])
 
 ## on ze30, we have PSC1/4/5/6 ...
 RTEMS_BSPOPTS_SET([BSP_UART_AVAIL_MASK],[pm520_ze30],[0x39])
