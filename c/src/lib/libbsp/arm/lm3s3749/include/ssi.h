@@ -20,4 +20,4 @@ extern rtems_libi2c_bus_t * const lm3s3749_ssi_1;
 }
 #endif
 
-#endif
+#endif /* LIBBSP_ARM_LM3S3749_SSI_H */
