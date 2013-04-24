@@ -22,6 +22,7 @@
 #include <rtems.h>
 #include <rtems/irq.h>
 #include <rtems/irq-extension.h>
+#include <bspopts.h>
 
 #endif /* ASM */
 

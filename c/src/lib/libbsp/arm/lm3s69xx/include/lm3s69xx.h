@@ -18,6 +18,7 @@
 
 #ifndef LIBBSP_ARM_LM3S69XX_LM3S69XX_H
 #define LIBBSP_ARM_LM3S69XX_LM3S69XX_H
+#include <bspopts.h>
 #include <bsp/utility.h>
 
 #define LM3S69XX_SYSCON_BASE 0x400fe000

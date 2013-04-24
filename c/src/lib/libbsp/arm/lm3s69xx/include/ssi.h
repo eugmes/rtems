@@ -8,7 +8,7 @@
 #ifndef LIBBSP_ARM_LM3S69XX_SSI_H
 #define LIBBSP_ARM_LM3S69XX_SSI_H
 #include <rtems/libi2c.h>
-#include <bsp/bspopts.h>
+#include <bspopts.h>
 
 #ifdef __cplusplus
 extern "C" {

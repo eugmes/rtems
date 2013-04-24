@@ -8,6 +8,7 @@
 
 #ifndef LIBBSP_ARM_LM3S69XX_IO_H
 #define LIBBSP_ARM_LM3S69XX_IO_H
+#include <bspopts.h>
 #include <stdbool.h>
 
 typedef enum {
