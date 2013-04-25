@@ -64,7 +64,7 @@
 
 #define LM3S69XX_SYSCON ((volatile lm3s69xx_syscon *)LM3S69XX_SYSCON_BASE)
 
-#define LM3S69XX_PLL_FREQUENCY 400000000
+#define LM3S69XX_PLL_FREQUENCY 400000000U
 
 typedef struct  {
   uint32_t data[256]; /* Masked data registers are included here. */
