@@ -1,8 +1,6 @@
 /*
  * Copyright © 2013 Eugeniy Meshcheryakov <eugen@debian.org>
  *
- * Based on lm3s69xx BSP code.
- *
  * Copyright (c) 2011 Sebastian Huber.  All rights reserved.
  *
  *  embedded brains GmbH
