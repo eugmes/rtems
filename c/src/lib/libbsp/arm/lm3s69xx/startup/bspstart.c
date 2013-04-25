@@ -16,7 +16,6 @@
 
 static void init_main_osc(void)
 {
-#if !LM3S69XX_QEMU
   volatile lm3s69xx_syscon *syscon = LM3S69XX_SYSCON;
 
   uint32_t sysdiv_val = LM3S69XX_PLL_FREQUENCY / LM3S69XX_SYSTEM_CLOCK;
@@ -41,7 +40,6 @@ static void init_main_osc(void)
 
   rcc &= ~SYSCONRCC_BYPASS;
   syscon->rcc = rcc;
-#endif
 }
 
 static const lm3s69xx_gpio_config start_config_gpio[] = {
