@@ -26,11 +26,14 @@ static rtems_status_code lm3s69xx_ssi_init(rtems_libi2c_bus_t *bus)
 {
   lm3s69xx_ssi_bus_entry *e = (lm3s69xx_ssi_bus_entry *)bus;
   volatile lm3s69xx_ssi* regs = e->regs;
+  uint32_t clock_div = LM3S69XX_SYSTEM_CLOCK / 2 / LM3S69XX_SSI_CLOCK;
 
   lm3s69xx_gpio_set_config_array(e->io_configs, 3);
 
   lm3s69xx_syscon_enable_ssi_clock(e->bus_number, true);
-  regs->cr0 = SSICR0_SCR(24) | SSICR0_SPO | SSICR0_SPH | SSICR0_FRF(0) | SSICR0_DSS(7); // FIXME
+  regs->cr1 = 0;
+  regs->cpsr = SSI_CPSRDIV(2);
+  regs->cr0 = SSICR0_SCR(clock_div - 1) | SSICR0_SPO | SSICR0_SPH | SSICR0_FRF(0) | SSICR0_DSS(7);
   regs->cr1 = SSICR1_SSE;
 
   return RTEMS_SUCCESSFUL;
